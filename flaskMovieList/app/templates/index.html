@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <title>{{ title }} - Movie List Portal </title>
+            <style>
+            /* TODO move all CSS in to style.css file*/
+            table {
+              font-family: arial;
+              border-collapse: collapse;
+              width: 100%;
+            }
+
+            td, th {
+              border: 1px solid #dddddd;
+              text-align: left;
+              padding: 8px;
+            }
+
+            tr:nth-child(even) {
+              background-color: #dddddd;
+            }
+
+    </style>
+    </head>
+    <body>
+         <div>
+            <a href="/movies/">Movie List</a>
+         </div>
+
+         <div>
+            <a href="/people/">People List</a>
+         </div>
+
+         {% if user %}
+          <div>
+              <h1>Hello, {{ user }}!</h1>
+          </div>
+         {% endif %}
+        <div>
+            <h1>{{ title }}</h1>
+         </div>
+        <hr>
+         <h1>Author: Volodymyr Moskov</h1>
+         <h1>Date: 2020-07-02</h1>
+
+        {% block content %}
+
+        {% endblock %}
+
+
+    </body>
+</html>

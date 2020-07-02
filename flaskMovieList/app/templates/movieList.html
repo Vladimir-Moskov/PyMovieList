@@ -1,0 +1,19 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <table>
+        <tr>
+            {% for header in headers %}
+            <th>{{ header }}</th>
+            {% endfor %}
+          </tr>
+        {% for movie_item in movie_list %}
+        <tr valign="top">
+            <td>{{ movie_item.title }}</td>
+            <td>{{ movie_item.title }}</td>
+            <td>{{ movie_item.title }}</td>
+            <td>{{ movie_item.title }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
