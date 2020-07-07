@@ -4,16 +4,30 @@
     <table>
         <tr>
             {% for header in headers %}
-            <th>{{ header }}</th>
+                <th>{{ header }}</th>
             {% endfor %}
           </tr>
-        {% for people_item in people_list %}
-        <tr valign="top">
-            <td>{{ people_item.name }}</td>
-            <td>{{ people_item.name }}</td>
-            <td>{{ people_item.name }}</td>
-            <td>{{ people_item.name }}</td>
-        </tr>
+        {% for people_item in people_list.values() %}
+            <tr valign="top">
+                <td><a href="{{ url_for('people_details', people_id = people_item.id) }}">{{ people_item.name }}</a></td>
+                <td>{{ people_item.gender }}</td>
+                <td>{{ people_item.age }}</td>
+
+                <td>
+                     {% if  people_item.films %}
+                         <table>
+                             {% for movie in people_item.films %}
+                                 <tr valign="top">
+                                     <td>
+                                        <a href="{{ url_for('movies_details', movie_id = movie.id) }}">{{ movie.title }}</a>
+                                     </td>
+                                 </tr>
+                             {% endfor %}
+                        </table>
+
+                      {% endif %}
+                </td>
+            </tr>
         {% endfor %}
     </table>
 {% endblock %}

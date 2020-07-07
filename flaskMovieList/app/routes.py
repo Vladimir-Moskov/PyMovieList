@@ -3,17 +3,17 @@
 """
 
 from flask import render_template, abort, redirect, url_for
-from app import app, movieListLoader
+from app import app, movieListLoader, cache
 from functools import wraps
+from app.config import Config
 
 
 def load_data(func):
     @wraps(func)
     def decorated(*args, **kwargs):
+        movieListLoader.get_data()
         if not movieListLoader.result:
-            movieListLoader.load_data_from_api()
-            if not movieListLoader.result:
-                abort(404, description=f"GHIBLI API_ENDPOINTS ARE NOT AVAILABLE")
+            abort(404, description=f"GHIBLI API_ENDPOINTS ARE NOT AVAILABLE")
         return func(*args, **kwargs)
     return decorated
 
@@ -24,6 +24,7 @@ def validate_details_data(data_dic, id, name):
     return data_dic[id]
 
 
+@cache.cached(timeout=0)
 @app.errorhandler(404)
 def not_found(e):
     """
@@ -36,6 +37,7 @@ def not_found(e):
 
 @app.route('/')
 @app.route('/index')
+@cache.cached(timeout=0)
 def index():
     """
         Welcome page
@@ -47,6 +49,7 @@ def index():
 @app.route('/movies')
 @app.route('/movies/')
 @load_data
+@cache.cached()
 def movies():
     """
         Welcome page
@@ -60,6 +63,7 @@ def movies():
 
 @app.route('/movies/<movie_id>')
 @load_data
+@cache.cached()
 def movies_details(movie_id):
     """
         Welcome page
@@ -78,6 +82,7 @@ def movies_details(movie_id):
 @app.route('/people')
 @app.route('/people/')
 @load_data
+@cache.cached()
 def people():
     """
         Welcome page
@@ -86,11 +91,13 @@ def people():
 
     return render_template('peopleList.html',
                            title='People List',
-                           headers=["Name"],
+                           headers=["Name", "Gender", "Age", "Films"],
                            people_list=movieListLoader.people_data)
+
 
 @app.route('/people/<people_id>')
 @load_data
+@cache.cached()
 def people_details(people_id):
     """
         Welcome page

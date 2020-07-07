@@ -8,6 +8,7 @@ from logging.handlers import RotatingFileHandler
 import logging
 
 from flask import Flask
+from flask_caching import Cache
 from .config import Config
 
 from flask_cors import CORS
@@ -18,11 +19,13 @@ from flask_cors import CORS
 app = Flask(__name__)
 app.config['BUNDLE_ERRORS'] = True
 app.config['TESTING'] = Config.TESTING
-
+app.config['TESTING'] = "simple"
+app.config["CACHE_DEFAULT_TIMEOUT"] = Config.DATA_RELOAD_TIME
 
 # add CORS for frontend cross domain policy
 cors = CORS(app)
 
+cache = Cache(app)
 
 # create and set up simple logging
 if app.config['TESTING'] == False:

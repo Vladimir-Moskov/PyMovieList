@@ -21,14 +21,12 @@ class Config:
     # wep app port
     PORT_API_APP = "5000"
 
-    # api root url
-    SERVER_NAME_API_APP = "/algorithms/api/v1"
-
     # log location
     LOG_DIRRECTORY = "logs/movieList.log"
     LOG_SIZE = 10240
     LOG_BACKUP_COUNT = 10
 
+    DATA_RELOAD_TIME = 60   # in seconds
 
     # to avoid creation of logging and monitoring dashboard for tests
     TESTING = False

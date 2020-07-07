@@ -2,13 +2,9 @@
 # Light weight Linux version - not much software needs to run the application
 FROM python:3.7.7-alpine3.12
 
-RUN mkdir -p /home/algorithmsAPI/webAPI
+RUN mkdir -p /home/PyMovieList/flaskMovieList
 
-WORKDIR /home/algorithmsAPI/webAPI
-
-# workaround to install numpy for alpine
-# Install native libraries, required for numpy
-RUN apk --no-cache add musl-dev linux-headers g++
+WORKDIR /home/PyMovieList/flaskMovieList
 
 #  workaround to install gevent for alpine
 RUN apk add --no-cache python3-dev libffi-dev gcc musl-dev make
@@ -23,9 +19,9 @@ RUN pip install -r requirements.txt
 # add gevent as async layer
 RUN pip install gunicorn gevent
 
-COPY  ./webAPI .
+COPY  ./flaskMovieList .
 
-ENV FLASK_APP=algorithms_api.py
+ENV FLASK_APP=flaskMovieList_app.py
 
 EXPOSE 5000
 
@@ -33,4 +29,4 @@ EXPOSE 5000
 CMD gunicorn --worker-class gevent \
   --workers 4 \
   --bind 0.0.0.0:5000 \
-  algorithms_api:app
+  flaskMovieList_app:app

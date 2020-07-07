@@ -2,13 +2,9 @@
 # Light weight Linux version - not much software needs to run the application
 FROM python:3.7.7-alpine3.12
 
-RUN mkdir -p /home/algorithmsAPI/webAPI
+RUN mkdir -p /home/PyMovieList/flaskMovieList
 
-WORKDIR /home/algorithmsAPI/webAPI
-
-# workaround to install numpy for alpine
-# Install native libraries, required for numpy
-RUN apk --no-cache add musl-dev linux-headers g++
+WORKDIR /home/PyMovieList/flaskMovieList
 
 RUN pip install --upgrade pip
 
@@ -19,11 +15,11 @@ RUN pip install -r requirements.txt
 # add web server gunicorn to run application
 RUN pip install gunicorn
 
-COPY  ./webAPI .
+COPY  ./flaskMovieList .
 
 RUN chmod -R 777 .
 
-ENV FLASK_APP=algorithms_api.py
+ENV FLASK_APP=flaskMovieList_app.py
 
 EXPOSE 5000
 
@@ -32,5 +28,5 @@ CMD gunicorn \
   --workers 4 \
   --threads 16 \
   --bind 0.0.0.0:5000 \
-  algorithms_api:app
+  flaskMovieList_app:app
 

@@ -21,13 +21,21 @@
 
     </style>
     </head>
+
     <body>
+        <h1>Studio Ghibli Movies</h1>
+
+         <h5>Author: Volodymyr Moskov</h5>
+         <h5>Date: 2020-07-02</h5>
+
+         <hr>
+
          <div>
-            <a href="{{ url_for('movies') }}">Movie List</a>
+            <h3><a href="{{ url_for('movies') }}">Movie List</a></h3>
          </div>
 
          <div>
-            <a href="{{ url_for('people') }}">People List</a>
+            <h3><a href="{{ url_for('people') }}">People List</a></h3>
          </div>
 
          {% if user %}
@@ -39,8 +47,7 @@
             <h1>{{ title }}</h1>
          </div>
         <hr>
-         <h1>Author: Volodymyr Moskov</h1>
-         <h1>Date: 2020-07-02</h1>
+
 
         {% block content %}
 
