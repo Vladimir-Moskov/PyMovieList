@@ -16,7 +16,7 @@ test_movie_list = {
         "rt_score": "95",
         "people": [
         ],
-        "url": "https://ghibliapi.herokuapp.com/movies/2baf70d1-42bb-4437-b551-e5fed5a87abe"
+        "url": "https://ghibliapi.herokuapp.com/films/2baf70d1-42bb-4437-b551-e5fed5a87abe"
       }
 }
 

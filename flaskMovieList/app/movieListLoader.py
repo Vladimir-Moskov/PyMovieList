@@ -81,8 +81,9 @@ def load_data_from_api() -> None:
     else:
         # refresh / reload data after 1 minute (Config.DATA_RELOAD_TIME)
         app.logger.info(f'PyFlaskAlgorithmsAPI - {__name__} - load_data_from_api - Done')
-        time.sleep(Config.DATA_RELOAD_TIME)
-        load_data_from_api()
+        if not Config.TESTING:
+            time.sleep(Config.DATA_RELOAD_TIME)
+            load_data_from_api()
 
 
 def update_data(movies_json: Dict, people_json: Dict) -> None:
@@ -116,7 +117,7 @@ def update_data(movies_json: Dict, people_json: Dict) -> None:
     for people in people_data_local.values():
         films = []
         for film in people["films"]:
-            film_id = movie_id_from_url(film["url"])
+            film_id = movie_id_from_url(film)
             if film_id and movies_data_local[film_id]:
                 films.append(movies_data_local[film_id])
                 movies_data_local[film_id]["people"].append(people)
@@ -127,7 +128,7 @@ def update_data(movies_json: Dict, people_json: Dict) -> None:
     # for movie in movies_data.values():
     #     people_ar = []
     #     for people in movie["people"]:
-    #         people_id = people_id_from_url(people["url"])
+    #         people_id = people_id_from_url(people)
     #         if people_id and people_data[people_id]:
     #             people_ar.append(people_data[people_id])
     #     movie["people"] = people_ar
@@ -150,7 +151,7 @@ def people_id_from_url(url: str) -> str:
         :param url: people url from GHIBLI_API
         :return: people id
     """
-    return url[len(Config.GHIBLI_API_ENDPOINT_PEOPLE) + 1:]
+    return url[len(Config.GHIBLI_API_ENDPOINT_PEOPLE):]
 
 
 def movie_id_from_url(url: str) -> str:
@@ -160,4 +161,4 @@ def movie_id_from_url(url: str) -> str:
         :param url: movie url from GHIBLI_API
         :return: movie id
     """
-    return url[len(Config.GHIBLI_API_ENDPOINT_FILMS) + 1:]
+    return url[len(Config.GHIBLI_API_ENDPOINT_FILMS):]

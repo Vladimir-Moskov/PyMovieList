@@ -7,8 +7,10 @@
 from unittest import mock
 from app.config import Config
 from .resources import *
-
 import app.movieListLoader as movieListLoader
+
+# set application in state for testing (turn off logging and monitoring dashboard)
+Config.TESTING = True
 
 
 def mocked_requests_get(*args, **kwargs):
@@ -27,16 +29,21 @@ def mocked_requests_get(*args, **kwargs):
         def json(self):
             return self.json_data
 
+    test_movie_list_local = test_movie_list
+    test_people_list_local = test_people_list
+    test_movie_list_local[test_movie_id]["people"] = [test_people_list[test_people_id]["url"]]
+    test_people_list_local[test_people_id]["films"] = [test_movie_list_local[test_movie_id]["url"]]
+
     if args:
         if args[0] == Config.GHIBLI_API_ENDPOINT_FILMS:
-            return MockResponse([test_movie_list[test_movie_id]], 200)
+            return MockResponse([test_movie_list_local[test_movie_id]], 200)
         elif args[0] == Config.GHIBLI_API_ENDPOINT_PEOPLE:
-            return MockResponse([test_people_list[test_people_id]], 200)
+            return MockResponse([test_people_list_local[test_people_id]], 200)
     if kwargs:
         if kwargs['url'] == Config.GHIBLI_API_ENDPOINT_FILMS:
-            return MockResponse([test_movie_list[test_movie_id]], 200)
+            return MockResponse([test_movie_list_local[test_movie_id]], 200)
         elif kwargs['url'] == Config.GHIBLI_API_ENDPOINT_PEOPLE:
-            return MockResponse([test_people_list[test_people_id]], 200)
+            return MockResponse([test_people_list_local[test_people_id]], 200)
 
     return MockResponse(None, 404)
 
@@ -51,7 +58,7 @@ def test_initial_sate():
 
 
 @mock.patch('requests.get', side_effect=mocked_requests_get)
-def test_get_data():
+def test_get_data(mock_get):
     """
         Check state of movieListLoader after data loading
     """

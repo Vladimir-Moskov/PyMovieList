@@ -20,6 +20,7 @@ app.config['BUNDLE_ERRORS'] = True
 app.config['TESTING'] = Config.TESTING
 app.config['TESTING'] = "simple"
 app.config["CACHE_DEFAULT_TIMEOUT"] = Config.DATA_RELOAD_TIME
+app.config["CACHE_TYPE"] = "simple"
 
 # add CORS for frontend cross domain policy
 cors = CORS(app)
@@ -27,7 +28,7 @@ cors = CORS(app)
 cache = Cache(app)
 
 # create and set up simple logging
-if app.config['TESTING'] == False:
+if not app.config['TESTING']:
     try:
         if not os.path.exists('logs'):
             os.mkdir('logs')
