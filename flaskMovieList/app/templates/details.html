@@ -10,7 +10,7 @@
                     <table>
                          {% for people in data[field] %}
                              <tr valign="top">
-                                 <a href="/people/{{ people['id'] }}">people["name"]</a>
+                                 <a href="/people/{{ people['id'] }}">{{ people["name"] }}</a>
                              </tr>
                          {% endfor %}
                     </table>
@@ -19,11 +19,11 @@
                      <table>
                          {% for film in data[field] %}
                              <tr valign="top">
-                                 <a href="/movies/{{ film['id'] }}">film["title"]</a>
+                                 <a href="/movies/{{ film['id'] }}">{{ film["title"] }}</a>
                              </tr>
                          {% endfor %}
                     </table>
-                  {% else}
+                  {% else %}
                          <td>{{ data[field] }}</td>
                   {% endif %}
 

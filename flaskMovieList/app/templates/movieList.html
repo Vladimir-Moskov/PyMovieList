@@ -7,12 +7,26 @@
             <th>{{ header }}</th>
             {% endfor %}
           </tr>
-        {% for movie_item in movie_list %}
+        {% for movie_item in movie_list.values() %}
         <tr valign="top">
+            <td><a href="{{ url_for('movies_details', movie_id = movie_item.id) }}">{{ movie_item.title }}</a></td>
+            <td>{{ movie_item.release_date }}</td>
             <td>{{ movie_item.title }}</td>
-            <td>{{ movie_item.title }}</td>
-            <td>{{ movie_item.title }}</td>
-            <td>{{ movie_item.title }}</td>
+
+            <td>
+                 {% if  movie_item.people %}
+                     <table>
+                         {% for people in movie_item.people %}
+                             <tr valign="top">
+                                 <td>
+                                    <a href="{{ url_for('people_details', people_id = people.id) }}">{{ people.name }}</a>
+                                 </td>
+                             </tr>
+                         {% endfor %}
+                    </table>
+
+                  {% endif %}
+            </td>
         </tr>
         {% endfor %}
     </table>

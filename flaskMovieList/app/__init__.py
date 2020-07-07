@@ -20,9 +20,8 @@ app.config['BUNDLE_ERRORS'] = True
 app.config['TESTING'] = Config.TESTING
 
 
-
 # add CORS for frontend cross domain policy
-# cors = CORS(app)
+cors = CORS(app)
 
 
 # create and set up simple logging
@@ -38,8 +37,8 @@ if app.config['TESTING'] == False:
     file_handler.setFormatter(logging.Formatter(
         '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
     file_handler.setLevel(logging.INFO)
-    app.logger.addHandler(file_handler)
 
+    app.logger.addHandler(file_handler)
     app.logger.setLevel(logging.INFO)
 
 

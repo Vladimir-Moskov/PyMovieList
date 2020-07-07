@@ -23,11 +23,11 @@
     </head>
     <body>
          <div>
-            <a href="/movies/">Movie List</a>
+            <a href="{{ url_for('movies') }}">Movie List</a>
          </div>
 
          <div>
-            <a href="/people/">People List</a>
+            <a href="{{ url_for('people') }}">People List</a>
          </div>
 
          {% if user %}

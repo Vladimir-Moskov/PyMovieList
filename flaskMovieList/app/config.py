@@ -29,5 +29,10 @@ class Config:
     LOG_SIZE = 10240
     LOG_BACKUP_COUNT = 10
 
+
     # to avoid creation of logging and monitoring dashboard for tests
     TESTING = False
+
+    # api-endpoint
+    GHIBLI_API_ENDPOINT_FILMS = "https://ghibliapi.herokuapp.com/films/"
+    GHIBLI_API_ENDPOINT_PEOPLE = "https://ghibliapi.herokuapp.com/people/"
