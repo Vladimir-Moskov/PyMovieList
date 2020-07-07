@@ -1,5 +1,5 @@
 """
-   Algorithms Wep API application / main file / entry point,
+   Algorithms Wep application / main file / entry point,
    with configure routing map and application server start up
 """
 

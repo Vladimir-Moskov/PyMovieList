@@ -28,9 +28,10 @@ def validate_details_data(data_dic, id, name):
 @app.errorhandler(404)
 def not_found(e):
     """
-         use template made by Colorlib (https://colorlib.com)
-    :param e: request
-    :return: error page wrapper
+         Use template for as 404 page
+
+        :param e: request
+        :return: error page wrapper
     """
     return render_template('404.html'), 404
 
@@ -41,7 +42,8 @@ def not_found(e):
 def index():
     """
         Welcome page
-    :return: page itself
+
+        :return: page itself
     """
     return render_template('index.html', title='Welcome here')
 
@@ -52,8 +54,9 @@ def index():
 @cache.cached()
 def movies():
     """
-        Welcome page
-    :return: page itself
+       Movie List page
+
+        :return: page itself
     """
 
     return render_template('movieList.html',
@@ -61,13 +64,15 @@ def movies():
                            headers=["Title", "Date", "Description", "People"],
                            movie_list=movieListLoader.movies_data)
 
+
 @app.route('/movies/<movie_id>')
 @load_data
 @cache.cached()
-def movies_details(movie_id):
+def movies_details(movie_id: str):
     """
-        Welcome page
-    :return: page itself
+        Movie details page
+
+        :return: page itself
     """
     if not movie_id:
         return redirect(url_for('movies'))
@@ -85,8 +90,9 @@ def movies_details(movie_id):
 @cache.cached()
 def people():
     """
-        Welcome page
-    :return: page itself
+        People List page
+
+        :return: page itself
     """
 
     return render_template('peopleList.html',
@@ -98,16 +104,17 @@ def people():
 @app.route('/people/<people_id>')
 @load_data
 @cache.cached()
-def people_details(people_id):
+def people_details(people_id: str):
     """
-        Welcome page
-    :return: page itself
+        People details page
+
+        :return: page itself
     """
     if not people_id:
         return redirect(url_for('people'))
 
     people_data = validate_details_data(movieListLoader.people_data, people_id, "people")
     return render_template('details.html',
-                           title=f'People Details - {people["name"]}',
+                           title=f'People Details - {people_data["name"]}',
                            fields=["id", "name", "gender", "age", "eye_color", "hair_color", "films"],
                            data=people_data)

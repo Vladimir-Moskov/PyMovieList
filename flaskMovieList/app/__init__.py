@@ -14,7 +14,6 @@ from .config import Config
 from flask_cors import CORS
 
 
-
 # set up flask application
 app = Flask(__name__)
 app.config['BUNDLE_ERRORS'] = True
