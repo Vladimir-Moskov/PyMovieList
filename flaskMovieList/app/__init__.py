@@ -45,6 +45,11 @@ if app.config['TESTING'] == False:
     app.logger.setLevel(logging.INFO)
 
 
+def clear_cash():
+    with app.app_context():
+        cache.clear()
+
+
 from . import routes, movieListLoader
 
 

@@ -106,8 +106,8 @@ def people_details(people_id):
     if not people_id:
         return redirect(url_for('people'))
 
-    people = validate_details_data(movieListLoader.people_data, people_id, "people")
+    people_data = validate_details_data(movieListLoader.people_data, people_id, "people")
     return render_template('details.html',
                            title=f'People Details - {people["name"]}',
                            fields=["id", "name", "gender", "age", "eye_color", "hair_color", "films"],
-                           data=people)
+                           data=people_data)

@@ -3,7 +3,7 @@ import requests
 import time
 
 from .config import Config
-from app import app
+from app import app, clear_cash
 from typing import Dict
 
 result = False
@@ -17,6 +17,7 @@ people_data = {}
 def get_data():
     app.logger.info(f'PyFlaskAlgorithmsAPI - {__name__} - get_data')
     global data_load_thread
+    global result
     if not data_load_thread:
         app.logger.info(f'PyFlaskAlgorithmsAPI - {__name__} - get_data - create data_load_thread')
         thread = threading.Thread(target=load_data_from_api)
@@ -27,6 +28,7 @@ def get_data():
 
 
 def load_data_from_api():
+    global result
     app.logger.info(f'PyFlaskAlgorithmsAPI - {__name__} - load_data_from_api')
     try:
         request_movie_list = requests.get(url=Config.GHIBLI_API_ENDPOINT_FILMS)
@@ -37,7 +39,7 @@ def load_data_from_api():
     except Exception as error:
         app.logger.error(f"The current services cant be processed because {error}")
 
-        global result
+
         global movies_data
         global people_data
         movies_data = {}
@@ -45,9 +47,15 @@ def load_data_from_api():
         result = False
     else:
         update_data(result_movies, result_people)
-    app.logger.info(f'PyFlaskAlgorithmsAPI - {__name__} - load_data_from_api - Done')
-    time.sleep(Config.DATA_RELOAD_TIME)
-    load_data_from_api()
+
+    if not result:
+        # attempt to retry load data again
+        app.logger.info(f'PyFlaskAlgorithmsAPI - {__name__} - load_data_from_api - Retry')
+        load_data_from_api()
+    else:
+        app.logger.info(f'PyFlaskAlgorithmsAPI - {__name__} - load_data_from_api - Done')
+        time.sleep(Config.DATA_RELOAD_TIME)
+        load_data_from_api()
 
 
 def update_data(movies_json: Dict, people_json: Dict):
@@ -88,6 +96,7 @@ def update_data(movies_json: Dict, people_json: Dict):
     result = True
     global result_available
     result_available.set()
+    clear_cash()
 
 
 def people_id_from_url(url):
