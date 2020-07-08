@@ -8,6 +8,7 @@ from app import app, movieListLoader, cache
 from functools import wraps
 from typing import Dict
 
+
 def load_data(func):
     """
         Router decarator in order to assure that data is available for web page
@@ -26,9 +27,9 @@ def load_data(func):
 
 
 def validate_details_data(data_dic: Dict, item_id: int, name: str) -> Dict:
-    if id not in data_dic:
+    if item_id not in data_dic:
         abort(404, description=f"The {name} with id={item_id} not found")
-    return data_dic[id]
+    return data_dic[item_id]
 
 
 @cache.cached(timeout=0)
