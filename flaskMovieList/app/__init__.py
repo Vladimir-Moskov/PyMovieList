@@ -1,6 +1,6 @@
 """
-   Algorithms Wep API initialization point
-   with creation Flask app, set up dashboard and configure logging
+   Movie List Wep Application initialization point
+   with creation Flask app, set up  and configuration
 """
 
 import os
@@ -18,7 +18,6 @@ from flask_cors import CORS
 app = Flask(__name__)
 app.config['BUNDLE_ERRORS'] = True
 app.config['TESTING'] = Config.TESTING
-app.config['TESTING'] = "simple"
 app.config["CACHE_DEFAULT_TIMEOUT"] = Config.DATA_RELOAD_TIME
 app.config["CACHE_TYPE"] = "simple"
 
@@ -45,11 +44,15 @@ if not app.config['TESTING']:
     app.logger.setLevel(logging.INFO)
 
 
-def clear_cash():
+def clear_cash() -> None:
+    """
+        Clear Flask cash - static content / pages
+
+        :return: None
+    """
     with app.app_context():
         cache.clear()
 
 
 from . import routes, movieListLoader
-
 

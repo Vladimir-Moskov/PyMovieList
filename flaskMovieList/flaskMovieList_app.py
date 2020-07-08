@@ -1,6 +1,5 @@
 """
-   Algorithms Wep application / main file / entry point,
-   with configure routing map and application server start up
+   Movie List Wep application / main file / entry point - start flask app
 """
 
 from app.config import Config

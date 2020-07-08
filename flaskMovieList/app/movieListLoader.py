@@ -83,7 +83,11 @@ def load_data_from_api() -> None:
         app.logger.info(f'PyFlaskAlgorithmsAPI - {__name__} - load_data_from_api - Done')
         if not Config.TESTING:
             time.sleep(Config.DATA_RELOAD_TIME)
-            load_data_from_api()
+            try:
+                load_data_from_api()
+            except Exception as error:
+                app.logger.error(
+                    f"The current response data cant be processed because {error}")
 
 
 def update_data(movies_json: Dict, people_json: Dict) -> None:

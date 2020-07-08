@@ -1,14 +1,21 @@
 """
     Standard Flask routing - just simple url to function mapping
+
 """
 
 from flask import render_template, abort, redirect, url_for
 from app import app, movieListLoader, cache
 from functools import wraps
-from app.config import Config
-
+from typing import Dict
 
 def load_data(func):
+    """
+        Router decarator in order to assure that data is available for web page
+
+        :param func: router
+        :return:
+    """
+
     @wraps(func)
     def decorated(*args, **kwargs):
         movieListLoader.get_data()
@@ -18,9 +25,9 @@ def load_data(func):
     return decorated
 
 
-def validate_details_data(data_dic, id, name):
+def validate_details_data(data_dic: Dict, item_id: int, name: str) -> Dict:
     if id not in data_dic:
-        abort(404, description=f"The {name} with id={id} not found")
+        abort(404, description=f"The {name} with id={item_id} not found")
     return data_dic[id]
 
 

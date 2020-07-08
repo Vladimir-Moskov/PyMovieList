@@ -2,8 +2,11 @@
 Python application which serves a page with Movie List of Studio Ghibli.
 
 ## Here is solution
-  0. Please, see Task statement in Backend coding challenge_sennder_New.txt
-  1. Flask framework has been used to implement task web application.
+I have been used "old good" monolith approach for application architecture
+(no needs in microservices and decomposition for current requirements)
+
+  0. Please, see Task statement in "Backend coding challenge_sennder_New.txt"
+  1. Flask framework has been used to implement task as web application.
   2. Web app source code in PyMovieList/flaskMovieList/ directory
   3. Unit/International tests  in PPyMovieList/flaskMovieList/tests/ directory.
   6. Simple (Flask build in) cache has been implemented to return "static" content
